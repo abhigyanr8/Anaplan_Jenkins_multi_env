@@ -13,7 +13,7 @@ pipeline{
 			steps {
                                 // bat 'echo' params.ENV
                                 bat 'make --version'
-                                bat 'make tf-init env=' + params.ENV
+                                bat 'make tf-infra-init env='+ params.ENV
 
 
                   }
