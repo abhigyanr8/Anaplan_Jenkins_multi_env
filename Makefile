@@ -27,7 +27,8 @@ clean:
 ## AWS Infra Setup
 .PHONY: tf-infra-init
 tf-infra-init:
-	cd core-sizing-aws-infra && terraform init -backend-config ../environment/${env}/backend.conf -reconfigure && terraform workspace select -or-create ${env} && terraform validate && terraform plan -var-file ../environment/${env}/common.auto.tfvars -var-file ../environment/${env}/infra.auto.tfvars
+	cd core-sizing-aws-infra && terraform init -backend-config ../environment/${env}/backend.conf -reconfigure && terraform workspace select -or-create ${env} && terraform validate 
+#&& terraform plan -var-file ../environment/${env}/common.auto.tfvars -var-file ../environment/${env}/infra.auto.tfvars
 
 .PHONY: tf-infra-plan
 tf-infra-plan:
