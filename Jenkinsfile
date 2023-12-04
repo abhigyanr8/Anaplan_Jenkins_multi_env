@@ -12,7 +12,7 @@ pipeline{
       stage('AWS Deploy') {
 			steps {
 			       withCredentials([
-                                   aws(credentialsId: 'svc-ap-nibs-sizing-np-deploy'),
+                                   aws(credentialsId: 'aws_cred'),
                                 ]){
                                 // bat 'echo' params.ENV
                                 bat 'make --version'
