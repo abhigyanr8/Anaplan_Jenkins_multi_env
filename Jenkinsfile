@@ -13,11 +13,12 @@ pipeline{
 			steps {
 			       withCredentials([
                                    aws(credentialsId: 'svc-ap-nibs-sizing-np-deploy'),
-                                ])
+                                ]){
                                 // bat 'echo' params.ENV
                                 bat 'make --version'
                                 bat 'make tf-infra-init env='+ params.ENV
-                  }
+                               }
+			}
             }
     }
 }
