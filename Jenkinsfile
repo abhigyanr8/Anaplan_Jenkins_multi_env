@@ -16,6 +16,7 @@ pipeline{
       {
 			steps 
             {
+		    script {
                     def terraformSetupCompleted = fileExists(TERRAFORM_SETUP_COMPLETED_FILE)
 
                     if (!terraformSetupCompleted) 
@@ -38,6 +39,7 @@ pipeline{
                         echo 'Terraform setup has already been completed. Skipping.'
                     }
                 }
+	    }
 			
 			}
       }
