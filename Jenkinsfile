@@ -1,5 +1,5 @@
 pipeline{
-       agent anyc
+       agent any
         environment {
         TERRAFORM_SETUP_COMPLETED = 'false'
         }
