@@ -33,6 +33,7 @@ pipeline{
                         // Create a file to indicate that Terraform setup has been completed
                         writeFile file: TERRAFORM_SETUP_COMPLETED_FILE, text: ''
                     } 
+		    }
                     else {
                         echo 'Terraform setup has already been completed. Skipping.'
                     }
