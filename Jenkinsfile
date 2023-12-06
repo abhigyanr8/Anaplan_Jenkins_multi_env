@@ -1,8 +1,8 @@
 pipeline{
        agent any
-        environment {
-        TERRAFORM_INIT = 'false'
-        }
+      environment {
+        TERRAFORM_INIT = "${fileExists('terraform_init') ? 'true' : 'false'}"
+    }
     	parameters {
 	     choice(
                name: 'ENV', 
