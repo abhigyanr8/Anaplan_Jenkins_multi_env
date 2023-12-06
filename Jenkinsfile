@@ -20,7 +20,7 @@ pipeline{
                     aws(credentialsId: 'aws_cred')])
                       {
                         //bat 'make --version'
-                        //bat 'make tf-infra-init env='+ params.ENV
+                        bat 'make tf-infra-init env='+ params.ENV
                       }
 			}
       }
