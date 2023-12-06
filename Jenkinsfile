@@ -19,8 +19,8 @@ pipeline{
 			    withCredentials([
                     aws(credentialsId: 'aws_cred')])
                       {
-                        //bat 'make --version'
-                        bat 'make tf-infra-init env='+ params.ENV
+                        bat 'make --version'
+                        //bat 'make tf-infra-init env='+ params.ENV
                       }
 			}
       }
@@ -29,8 +29,9 @@ pipeline{
                 script {
                     if (env.TERRAFORM_SETUP_COMPLETED == 'false') {
                         // Run Terraform setup only in the first build
-                        sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+			     echo 'Terraform setup has already been completed. Skipping.'
+                       // bat 'terraform init'
+                       // bat 'terraform apply -auto-approve'
 
                         // Set the flag to indicate that Terraform setup has been completed
                         env.TERRAFORM_SETUP_COMPLETED = 'true'
