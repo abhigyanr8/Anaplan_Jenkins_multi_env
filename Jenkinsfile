@@ -17,7 +17,7 @@ pipeline{
                 script {
                     echo "TERRAFORM_SETUP_COMPLETED: ${env.TERRAFORM_SETUP_COMPLETED}"
                     echo "Files in workspace:"
-                    sh 'ls -al'
+                    bat 'ls -al'
                 }
             }
         }
