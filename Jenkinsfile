@@ -14,7 +14,8 @@ pipeline{
 			       withCredentials([
                                    aws(credentialsId: 'aws_cred'),
                                 ]){
-				       echo "Build number is ${currentBuild.number}"
+				  echo "${currentBuild.previousBuild.number}"     
+				  echo "Build number is ${currentBuild.number}"
                                 // bat 'echo' params.ENV
                                // bat 'make --version'
                                // bat 'make tf-infra-init env='+ params.ENV
