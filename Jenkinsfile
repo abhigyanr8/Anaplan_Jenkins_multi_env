@@ -20,8 +20,9 @@ pipeline{
 
                     if (!terraformSetupCompleted) {
                         // Run Terraform setup only in the first build
-                        sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+			     echo 'Terraform Init'
+                       // sh 'terraform init'
+                       // sh 'terraform apply -auto-approve'
 
                         // Create a file to indicate that Terraform setup has been completed
                         writeFile file: TERRAFORM_SETUP_COMPLETED_FILE, text: ''
