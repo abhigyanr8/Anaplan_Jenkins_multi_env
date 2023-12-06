@@ -1,7 +1,7 @@
 pipeline{
        agent any
-      environment {
-        TERRAFORM_INIT = "${fileExists('terraform_init') ? 'true' : 'false'}"
+  environment {
+        TERRAFORM_SETUP_COMPLETED_FILE = 'terraform_setup_completed'
     }
     	parameters {
 	     choice(
@@ -12,15 +12,25 @@ pipeline{
 	}
     
     stages{
-	     stage('Debug Info') {
+	    stage('Terraform Setup') {
             steps {
                 script {
-                    echo "TERRAFORM_INIT: ${env.TERRAFORM_INIT}"
-                    echo "Files in workspace:"
-                    bat 'ls'
+                    // Check if the file exists
+                    def terraformSetupCompleted = fileExists(TERRAFORM_SETUP_COMPLETED_FILE)
+
+                    if (!terraformSetupCompleted) {
+                        // Run Terraform setup only in the first build
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+
+                        // Create a file to indicate that Terraform setup has been completed
+                        writeFile file: TERRAFORM_SETUP_COMPLETED_FILE, text: ''
+                    } else {
+                        echo 'Terraform setup has already been completed. Skipping.'
+                    }
                 }
             }
-        }
+	    }
       stage('AWS Deploy') 
       {
 			steps 
@@ -33,23 +43,23 @@ pipeline{
                       }
 			}
       }
-         stage('Terraform Setup') {
-            steps {
-                script {
-                    if (env.TERRAFORM_INIT == 'false') {
-                        // Run Terraform setup only in the first build
-			     echo 'Terraform init'
-                       // bat 'terraform init'
-                       // bat 'terraform apply -auto-approve'
+    //      stage('Terraform Setup') {
+    //         steps {
+    //             script {
+    //                 if (env.TERRAFORM_INIT == 'false') {
+    //                     // Run Terraform setup only in the first build
+			 //     echo 'Terraform init'
+    //                    // bat 'terraform init'
+    //                    // bat 'terraform apply -auto-approve'
 
-                        // Set the flag to indicate that Terraform setup has been completed
-                        env.TERRAFORM_INIT = 'true'
-                    } else {
-                        echo 'Terraform setup has already been completed. Skipping.'
-                    }
-                }
-            }
+    //                     // Set the flag to indicate that Terraform setup has been completed
+    //                     env.TERRAFORM_INIT = 'true'
+    //                 } else {
+    //                     echo 'Terraform setup has already been completed. Skipping.'
+    //                 }
+    //             }
+    //         }
         
-    }
+    // }
 }
 }
