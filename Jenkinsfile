@@ -1,7 +1,7 @@
 pipeline{
-       agent any
+       agent anyc
         environment {
-          TERRAFORM_SETUP_COMPLETED = 'false'
+        TERRAFORM_SETUP_COMPLETED = 'false'
         }
     	parameters {
 	     choice(
@@ -12,28 +12,33 @@ pipeline{
 	}
     
     stages{
-         stage('AWS Deploy') 
-         {
-            steps 
+      stage('AWS Deploy') 
+      {
+			steps 
             {
-                withCredentials([aws(credentialsId: 'aws_cred')])
-                script 
-                {
-                    if (env.TERRAFORM_SETUP_COMPLETED == 'false') 
-                    {
+			    withCredentials([
+                    aws(credentialsId: 'aws_cred')])
+                      {
+                        //bat 'make --version'
+                        //bat 'make tf-infra-init env='+ params.ENV
+                      }
+			}
+      }
+         stage('Terraform Setup') {
+            steps {
+                script {
+                    if (env.TERRAFORM_SETUP_COMPLETED == 'false') {
                         // Run Terraform setup only in the first build
-                         bat 'make tf-infra-init env='+ params.ENV
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
 
                         // Set the flag to indicate that Terraform setup has been completed
                         env.TERRAFORM_SETUP_COMPLETED = 'true'
-                    } 
-                    else 
-                    {
+                    } else {
                         echo 'Terraform setup has already been completed. Skipping.'
                     }
                 }
             }
-         }
         
     }
 }
