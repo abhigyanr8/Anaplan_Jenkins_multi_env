@@ -15,9 +15,9 @@ pipeline{
 	     stage('Debug Info') {
             steps {
                 script {
-                    echo "TERRAFORM_SETUP_COMPLETED: ${env.TERRAFORM_SETUP_COMPLETED}"
+                    echo "TERRAFORM_INIT: ${env.TERRAFORM_INIT}"
                     echo "Files in workspace:"
-                    bat 'ls -al'
+                    bat 'ls'
                 }
             }
         }
