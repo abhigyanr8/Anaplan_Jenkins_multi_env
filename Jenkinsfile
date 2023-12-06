@@ -3,7 +3,7 @@ pipeline{
 
     environment 
       {
-        TERRAFORM_SETUP_COMPLETED_FILE1 = 'terraform_setup_completed'
+        TERRAFORM_SETUP_COMPLETED_FILE2 = 'terraform_setup_completed2'
       }
     	parameters {
 	     choice(
@@ -19,13 +19,10 @@ pipeline{
 			steps 
             {
 		    script {
-                    def terraformSetupCompleted = fileExists(TERRAFORM_SETUP_COMPLETED_FILE1)
+                    def terraformSetupCompleted2 = fileExists(TERRAFORM_SETUP_COMPLETED_FILE2)
 
-                    if (!terraformSetupCompleted) 
+                    if (!terraformSetupCompleted2) 
                     {
-                      withCredentials([
-                      aws(credentialsId: 'aws_cred')])
-                      {
                         //bat 'make --version'
                         //bat 'make tf-infra-init env='+ params.ENV
                       
@@ -34,9 +31,8 @@ pipeline{
                      
 
                         // Create a file to indicate that Terraform setup has been completed
-                        writeFile file: TERRAFORM_SETUP_COMPLETED_FILE1, text: ''
-                    } 
-		    }
+                        writeFile file: TERRAFORM_SETUP_COMPLETED_FILE2, text: ''
+		            }
                     else {
                         echo 'Terraform setup has already been completed. Skipping.'
                     }
