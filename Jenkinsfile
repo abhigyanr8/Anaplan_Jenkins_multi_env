@@ -29,7 +29,7 @@ pipeline{
                 script {
                     if (env.TERRAFORM_SETUP_COMPLETED == 'false') {
                         // Run Terraform setup only in the first build
-			     echo 'Terraform setup has already been completed. Skipping.'
+			     echo 'Terraform init'
                        // bat 'terraform init'
                        // bat 'terraform apply -auto-approve'
 
