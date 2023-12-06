@@ -1,7 +1,7 @@
 pipeline{
        agent any
         environment {
-        TERRAFORM_SETUP_COMPLETED = 'false'
+        TERRAFORM_INIT = 'false'
         }
     	parameters {
 	     choice(
@@ -27,14 +27,14 @@ pipeline{
          stage('Terraform Setup') {
             steps {
                 script {
-                    if (env.TERRAFORM_SETUP_COMPLETED == 'false') {
+                    if (env.TERRAFORM_INIT == 'false') {
                         // Run Terraform setup only in the first build
 			     echo 'Terraform init'
                        // bat 'terraform init'
                        // bat 'terraform apply -auto-approve'
 
                         // Set the flag to indicate that Terraform setup has been completed
-                        env.TERRAFORM_SETUP_COMPLETED = 'true'
+                        env.TERRAFORM_INIT = 'true'
                     } else {
                         echo 'Terraform setup has already been completed. Skipping.'
                     }
