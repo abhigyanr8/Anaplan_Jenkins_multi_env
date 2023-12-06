@@ -1,8 +1,10 @@
 pipeline{
        agent any
-        environment {
-        TERRAFORM_SETUP_COMPLETED_FILE = 'terraform_setup_completed'
-    }
+
+    environment 
+      {
+        TERRAFORM_SETUP_COMPLETED_FILE1 = 'terraform_setup_completed'
+      }
     	parameters {
 	     choice(
                name: 'ENV', 
@@ -17,7 +19,7 @@ pipeline{
 			steps 
             {
 		    script {
-                    def terraformSetupCompleted = fileExists(TERRAFORM_SETUP_COMPLETED_FILE)
+                    def terraformSetupCompleted = fileExists(TERRAFORM_SETUP_COMPLETED_FILE1)
 
                     if (!terraformSetupCompleted) 
                     {
@@ -32,7 +34,7 @@ pipeline{
                      
 
                         // Create a file to indicate that Terraform setup has been completed
-                        writeFile file: TERRAFORM_SETUP_COMPLETED_FILE, text: ''
+                        writeFile file: TERRAFORM_SETUP_COMPLETED_FILE1, text: ''
                     } 
 		    }
                     else {
